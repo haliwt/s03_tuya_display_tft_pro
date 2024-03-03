@@ -255,7 +255,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
              break;
 
 			 case WIFI_SET_TEMPERATURE:
-			     run_t.wifi_set_oneself_temperature=inputBuf[0]; 
+			 
+				 run_t.wifi_set_temperature =inputBuf[0]; 
                  state=0;
                  run_t.decodeFlag=1;
 

@@ -95,12 +95,12 @@ void Process_Key_Handler(uint8_t keylabel)
           
 			run_t.temperature_set_flag = 0;
       
-			run_t.wifi_set_temperature_value_flag=0;
+			run_t.if_send_temp_value_to_mainboard=0;
 		    run_t.gTimer_set_temp_times=0; //conflict with send temperatur value 
             run_t.wifi_led_fast_blink_flag=0;
             run_t.Timer_mode_flag = 0;
 			run_t.works_counter_time_value=0;
-			run_t.panel_key_setup_timer_flag=0;
+			run_t.set_temperature_or_timer_timing_flag=0;
             run_t.setup_temperature_value=0;
 		    run_t.timer_time_hours =0;
 			run_t.timer_time_minutes =0;
@@ -227,7 +227,7 @@ void Process_Key_Handler(uint8_t keylabel)
 
 			case 0: //set temperature value add number
       
-				run_t.wifi_set_temperature_value_flag =0;
+				run_t.if_send_temp_value_to_mainboard =0;
 				run_t.wifi_set_temperature ++;
 	            if(run_t.wifi_set_temperature < 20){
 				    run_t.wifi_set_temperature=20;
@@ -251,7 +251,7 @@ void Process_Key_Handler(uint8_t keylabel)
 				lcd_t.number2_low = unit_temp;
 				lcd_t.number2_high = unit_temp;
 
-				run_t.panel_key_setup_timer_flag = 1;
+				run_t.set_temperature_or_timer_timing_flag = 1;
                 
                run_t.process_run_guarantee_flag=0;
 					
@@ -310,7 +310,7 @@ void Process_Key_Handler(uint8_t keylabel)
 
 		   case 0: 
 	
-	        run_t.wifi_set_temperature_value_flag =0;
+	        run_t.if_send_temp_value_to_mainboard =0;
 			run_t.wifi_set_temperature--;
 			if(run_t.wifi_set_temperature<20) run_t.wifi_set_temperature=40;
 	        if(run_t.wifi_set_temperature >40)run_t.wifi_set_temperature=40;
@@ -331,7 +331,7 @@ void Process_Key_Handler(uint8_t keylabel)
 			lcd_t.number2_low = unit_temp;
 			lcd_t.number2_high = unit_temp;
 			
-			run_t.panel_key_setup_timer_flag = 1;
+			run_t.set_temperature_or_timer_timing_flag = 1;
 	    	
             run_t.process_run_guarantee_flag=0;
 		    break;
@@ -348,9 +348,7 @@ void Process_Key_Handler(uint8_t keylabel)
 					
 					
 				}
-				   // temp_bit_2_minute = run_t.timer_time_hours /10 ;
-					//temp_bit_1_minute = run_t.timer_time_hours %10;
-               
+				 
 					temp_bit_2_hours = run_t.timer_time_hours /10 ;
 					temp_bit_1_hours = run_t.timer_time_hours  %10;
                     HAL_Delay(20);
@@ -746,8 +744,8 @@ void RunPocess_Command_Handler(void)
 		
        //Enable digital "1,2" -> blink LED
        //Enable digital "1,2" -> blink LED
-	   if(run_t.panel_key_setup_timer_flag==1){
-           run_t.panel_key_setup_timer_flag=0;
+	   if(run_t.set_temperature_or_timer_timing_flag==1){
+           run_t.set_temperature_or_timer_timing_flag=0;
 		   key_set_temp_flag =1;
 		  run_t.setup_temperature_value=1;
 		   run_t.gTimer_numbers_one_two_blink=0;
@@ -799,7 +797,7 @@ void RunPocess_Command_Handler(void)
 
 
 		 }
-		  if(run_t.wifi_set_temperature_value_flag != 1){
+		  if(run_t.if_send_temp_value_to_mainboard != 1){
 		  	  SendData_Temp_Data(run_t.wifi_set_temperature);
                HAL_Delay(2);
 			}
@@ -905,7 +903,11 @@ void Receive_MainBoard_Data_Handler(uint8_t cmd)
 	 
 	 case WIFI_REAL_TEMP: //4//set temperature value
 		if(run_t.gPower_On ==1){
-				
+
+			run_t.gTimer_numbers_one_two_blink=0;
+			run_t.set_temperature_or_timer_timing_flag=1; //set tempearture value
+			run_t.if_send_temp_value_to_mainboard =1;  //don't send temp value to mainbord
+	
 			temperature_decade= run_t.wifi_set_temperature /10 ;
 			temperature_unit = run_t.wifi_set_temperature %10;
 
@@ -916,8 +918,8 @@ void Receive_MainBoard_Data_Handler(uint8_t cmd)
 			lcd_t.number2_high =  temperature_unit;
 			lcd_t.number2_low = temperature_unit;
 
-				
-			//	run_t.gTimer_numbers_one_two_blink=0;
+			run_t.gTimer_numbers_one_two_blink=0;	
+		
 		}
 
 	 break;
@@ -1011,28 +1013,24 @@ void Receive_MainBoard_Data_Handler(uint8_t cmd)
 
 	  case WIFI_SET_TEMPERATURE://11
 
-	  		if(run_t.gPower_On ==1){
+		if(run_t.gPower_On ==1){
 
-			run_t.panel_key_setup_timer_flag=1;
+		run_t.gTimer_numbers_one_two_blink=0;
+		run_t.set_temperature_or_timer_timing_flag=1; //set tempearture value
+		run_t.if_send_temp_value_to_mainboard =1;  //don't send temp value to mainbord
 
-		  
-			  run_t.wifi_set_temperature_value_flag =1;
+		temperature_decade=  run_t.wifi_set_temperature /10 ;
+		temperature_unit =  run_t.wifi_set_temperature %10;
+	
+		lcd_t.number1_high = temperature_decade;
+		lcd_t.number1_low = temperature_decade;
 
-			  run_t.wifi_set_temperature = run_t.wifi_set_oneself_temperature;
-
-		      temperature_decade=  run_t.wifi_set_temperature /10 ;
-			  temperature_unit =  run_t.wifi_set_temperature %10;
-		      // HAL_Delay(5);
-	         lcd_t.number1_high = temperature_decade;
-			 lcd_t.number1_low = temperature_decade;
-
-			 
-		    lcd_t.number2_high =  temperature_unit;
-			lcd_t.number2_low = temperature_unit;
+		lcd_t.number2_high =  temperature_unit;
+		lcd_t.number2_low = temperature_unit;
+		run_t.gTimer_numbers_one_two_blink=0;
 
 			
-			run_t.gTimer_numbers_one_two_blink=0;
-	      }
+		}
 
 
 	  break;

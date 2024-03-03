@@ -1216,7 +1216,7 @@ static void LCD_DisplayNumber_OneTwo_Icon_Handler(void)
 		     if(number_blink_times > 3){
                  number_blink_times =0;
 				 run_t.setup_temperature_value =0;
-			     run_t.panel_key_setup_timer_flag=0;
+			     run_t.set_temperature_or_timer_timing_flag=0;
 				 run_t.temperature_set_flag = 1;
 				 run_t.gTimer_temp_delay =67;
 				
