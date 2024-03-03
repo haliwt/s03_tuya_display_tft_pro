@@ -931,7 +931,7 @@ void Receive_MainBoard_Data_Handler(uint8_t cmd)
 	 break;
 
 	 
-	 case WIFI_REAL_TEMP: //4//set temperature value
+	 case WIFI_SET_TEMPERATURE: //4//set temperature value
 	       if(run_t.gPower_On ==1){
 		   	   
 
@@ -1032,34 +1032,34 @@ void Receive_MainBoard_Data_Handler(uint8_t cmd)
 
       break;
 
-	  case WIFI_SET_TEMPERATURE://11
+//	  case WIFI_SET_TEMPERATURE://11
 
-	  		if(run_t.gPower_On ==1){
+//	  		if(run_t.gPower_On ==1){
 
-			run_t.panel_key_setup_timer_flag=1;
+//			run_t.panel_key_setup_timer_flag=1;
 
-		  
-			  run_t.wifi_set_temperature_value_flag =1;
+//		  
+//			  run_t.wifi_set_temperature_value_flag =1;
 
-			  run_t.wifi_set_temperature = run_t.wifi_set_oneself_temperature;
+//			  run_t.wifi_set_temperature = run_t.wifi_set_oneself_temperature;
 
-		      temperature_decade=  run_t.wifi_set_temperature /10 ;
-			  temperature_unit =  run_t.wifi_set_temperature %10;
-		      // HAL_Delay(5);
-	         lcd_t.number1_high = temperature_decade;
-			 lcd_t.number1_low = temperature_decade;
+//		      temperature_decade=  run_t.wifi_set_temperature /10 ;
+//			  temperature_unit =  run_t.wifi_set_temperature %10;
+//		      // HAL_Delay(5);
+//	         lcd_t.number1_high = temperature_decade;
+//			 lcd_t.number1_low = temperature_decade;
 
-			 
-		    lcd_t.number2_high =  temperature_unit;
-			lcd_t.number2_low = temperature_unit;
+//			 
+//		    lcd_t.number2_high =  temperature_unit;
+//			lcd_t.number2_low = temperature_unit;
 
-			
-			run_t.gTimer_numbers_one_two_blink=0;
-	      }
+//			
+//			run_t.gTimer_numbers_one_two_blink=0;
+//	      }
 
 
 	  break;
-
+      
 
 
       default:
@@ -1083,7 +1083,7 @@ void Receive_Wifi_Cmd(uint8_t cmd)
 	switch(cmd){
 
 
-		   case WIFI_POWER_ON: //turn on 
+		   case WIFI_POWER_ON_NORMAL://WIFI_POWER_ON: //turn on 
 		 	
            
               run_t.wifi_send_buzzer_sound = WIFI_POWER_ON_ITEM;
@@ -1099,7 +1099,7 @@ void Receive_Wifi_Cmd(uint8_t cmd)
 
 	         break;
 
-			 case WIFI_POWER_OFF: //turn off 
+			 case WIFI_POWER_OFF_NORMAL: //turn off 
                 
 			   run_t.wifi_connect_flag =1;
 			   run_t.wifi_send_buzzer_sound = WIFI_POWER_OFF_ITEM;

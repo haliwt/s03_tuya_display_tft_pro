@@ -6,9 +6,9 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2022 STMicroelectronics.
-  * mass version 4.2
-  * note: 1 .touch key adjut timer timing of digital of number cycle problem.
+  * Data:2024.03.03. tuya of wifi that model S03
+  * S03 TFT display version 0.1
+  * 
   * 
   * 
   * 
