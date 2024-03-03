@@ -130,7 +130,7 @@ int main(void)
           
 	 
       if(run_t.decodeFlag ==1){
-		run_t.decodeFlag =0;
+		    run_t.decodeFlag =0;
         Decode_Function();
             
        }
@@ -169,7 +169,7 @@ int main(void)
 		}
 		Process_Key_Handler(run_t.gKey_command_tag);
 		RunPocess_Command_Handler();
-		USART1_Cmd_Error_Handler();
+		//USART1_Cmd_Error_Handler();
 
            
       break;

@@ -148,7 +148,9 @@ void SendData_Time_Data(uint8_t tdata)
 *******************************************************************************/
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-   
+   	// uint32_t isrflags   = READ_REG(huart->ISR);
+	// uint32_t cr1its     = READ_REG(huart->CR1);
+	// uint32_t cr3its     = READ_REG(huart->CR3);
 	if(huart==&huart1) // Motor Board receive data (filter)
 	{
 		switch(state)
@@ -208,12 +210,12 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
                     
 				  }
                   else if(inputBuf[0]==0x54){
-                    
+                     
                       run_t.wifi_receive_power_on_flag =1;
 
                   }
                   else if(inputBuf[0]==0x53){
-                    
+                      
                       run_t.wifi_receive_power_off_flag =1;
 
                   }
@@ -268,8 +270,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			  	    run_t.gmt_time_hours =inputBuf[0];
                     run_t.dispTime_hours  = inputBuf[0];
 				
-					 state=0;
-		             run_t.decodeFlag=1;
+					 state=4;
+		            // run_t.decodeFlag=1;
               
                  
              break;
@@ -322,18 +324,48 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
            
 		    break;
 
-                case WIFI_BEIJING_TIME:
-		           run_t.gmt_time_minutes = inputBuf[0];
-				   run_t.dispTime_minutes = inputBuf[0];
-
-
-                  
-				   state=0;
-		           run_t.decodeFlag=1;
-	
-		 
-		     break;
+               
 			}
+
+         if(run_t.single_data == WIFI_BEIJING_TIME){
+
+			 case WIFI_BEIJING_TIME:
+				run_t.gmt_time_minutes = inputBuf[0];
+				run_t.dispTime_minutes = inputBuf[0];
+			 
+			 
+							  
+				state=5;
+				//run_t.decodeFlag=1;
+				
+					 
+			break;
+
+
+
+		 }
+		
+
+		 break;
+
+		 case 5:
+
+
+		  if(run_t.single_data == WIFI_BEIJING_TIME){
+
+			 case WIFI_BEIJING_TIME:
+				run_t.gmt_time_seconds = inputBuf[0];
+			    run_t.dispTime_seconds = inputBuf[0];
+				run_t.gTimer_minute_Counter =inputBuf[0];
+				run_t.decodeFlag=1;
+				state=0;
+				
+					 
+			break;
+
+
+
+		 }
 
 		 break;
            
@@ -346,7 +378,33 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		break;
 
 		}
-      HAL_UART_Receive_IT(&huart1,inputBuf,1);//UART receive data interrupt 1 byte
+     
+	  	/* Çå³ýÖÐ¶Ï±êÖ¾ */
+	// SET_BIT(_pUart->uart->ICR, UART_CLEAR_PEF);
+	// SET_BIT(_pUart->uart->ICR, UART_CLEAR_FEF);
+	// SET_BIT(_pUart->uart->ICR, UART_CLEAR_NEF);
+	// SET_BIT(_pUart->uart->ICR, UART_CLEAR_OREF);
+	// SET_BIT(_pUart->uart->ICR, UART_CLEAR_IDLEF);
+	// SET_BIT(_pUart->uart->ICR, UART_CLEAR_TCF);
+	// SET_BIT(_pUart->uart->ICR, UART_CLEAR_LBDF);
+	// SET_BIT(_pUart->uart->ICR, UART_CLEAR_CTSF);
+	// SET_BIT(_pUart->uart->ICR, UART_CLEAR_CMF);
+	// SET_BIT(_pUart->uart->ICR, UART_CLEAR_WUF);
+	// SET_BIT(_pUart->uart->ICR, UART_CLEAR_TXFECF);
+
+	__HAL_UART_CLEAR_FLAG(&huart1, UART_CLEAR_PEF);
+	__HAL_UART_CLEAR_FLAG(&huart1, UART_CLEAR_FEF);
+	__HAL_UART_CLEAR_FLAG(&huart1, UART_CLEAR_NEF);
+	__HAL_UART_CLEAR_FLAG(&huart1, UART_CLEAR_OREF);
+	__HAL_UART_CLEAR_FLAG(&huart1, UART_CLEAR_IDLEF);
+	__HAL_UART_CLEAR_FLAG(&huart1, UART_CLEAR_TCF);
+	__HAL_UART_CLEAR_FLAG(&huart1, UART_CLEAR_LBDF);
+	__HAL_UART_CLEAR_FLAG(&huart1, UART_CLEAR_CTSF);
+	__HAL_UART_CLEAR_FLAG(&huart1, UART_CLEAR_CMF);
+	__HAL_UART_CLEAR_FLAG(&huart1, UART_CLEAR_WUF);
+	__HAL_UART_CLEAR_FLAG(&huart1, UART_CLEAR_TXFECF);
+
+	 HAL_UART_Receive_IT(&huart1,inputBuf,1);//UART receive data interrupt 1 byte
 	}
     
 }

@@ -169,7 +169,7 @@ void Process_Key_Handler(uint8_t keylabel)
 		
                //timer time + don't has ai item
                run_t.display_set_timer_timing = timer_time;
-			   run_t.gModel=2;
+			   run_t.gModel=2; //timer time
 		      SendData_Set_Wifi(MODE_TIMER);
 			  HAL_Delay(1);
                
@@ -178,7 +178,7 @@ void Process_Key_Handler(uint8_t keylabel)
                 //beijing time + ai item
                 run_t.display_set_timer_timing = beijing_time;
              
-	           run_t.gModel=1;
+	           run_t.gModel=1; //AI
 			  SendData_Set_Wifi(MODE_AI);
 			  HAL_Delay(1);
 				
