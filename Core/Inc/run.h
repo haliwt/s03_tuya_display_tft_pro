@@ -2,66 +2,6 @@
 #define __RUN_H_
 #include "main.h"
 
-#if 0
-enum Signal{
-	PANEL_DATA=1,
-	WIFI_INFO,//2
-	WIFI_TIME,//3
-	WIFI_REAL_TEMP,//4
-	WIFI_CMD,//5
-	WIFI_WIND_SPEED,//6
-	WIFI_BEIJING_TIME,//7
-	WIFI_SET_GMT_MINUTE,//8
-	WIFI_SET_GMT_SECOND,//9
-	WIFI_SET_TIMING,//10
-	WIFI_SET_TEMPERATURE,//11
-	
-	
-};
-
-
-typedef enum WIFI_STATE_T{
-   
-    WIFI_POWER_ON = 0x80,
-    WIFI_POWER_OFF=0X81,
-    WIFI_MODE_1=0X08,   //state ->normal works
-    WIFI_MODE_2=0X18,   //state->sleeping works
-    WIFI_KILL_ON=0x04,  //Anion(plasma)
-    WIFI_KILL_OFF=0x14,
-    WIFI_PTC_ON = 0x02, 
-    WIFI_PTC_OFF = 0x12,
-    WIFI_SONIC_ON = 0x01,       //ultrasonic
-    WIFI_SONIC_OFF = 0x11,
-    WIFI_WIND_SPEED_ITEM = 0x90,
-    WIFI_TEMPERATURE = 0xA0,
-    PTC_ERROR = 0xE0,
-	FAN_ERROR = 0xE1,
-	FAN_REMOVE_ERROR= 0xF1
-
-}wifi_state_t;
-
-
-#endif 
-
-
-
-typedef enum _Signal{
-    //POWER_OFF= 0xFD,
-	//POWER_ON=0x01,
-    PANEL_DATA=0x02,
-	WIFI_INFO=0x03,
-	WIFI_TIME=0x04,
-	WIFI_SET_TEMPERATURE,//4//WIFI_TEMP,
-	WIFI_CMD,
-	WIFI_WIND_SPEED,//6
-	WIFI_BEIJING_TIME,
-	WIFI_SET_TIMING,
-	WIFI_REF_DATA,
-	WIFI_FAN_DATA,
-	ANSWER_DATA
-}signal_t;
-
-
 
 typedef enum WIFI_STATE_T{
    
@@ -80,46 +20,11 @@ typedef enum WIFI_STATE_T{
     PTC_ERROR = 0xE0,
 	FAN_ERROR = 0xE1,
 	FAN_REMOVE_ERROR= 0xF1,
-	
+
     WIFI_POWER_ON_NORMAL= 0xB0,
 	WIFI_POWER_OFF_NORMAL = 0xB1,
 
-	PTC_WARNING= 0xE1,
-	FAN_WARNING = 0xE2,
-
-	FAN_REMOVE_WARNING = 0xF2
-
 }wifi_state_t;
-
-
-#if 0
-typedef enum WIFI_STATE_T{
-   
-    WIFI_POWER_ON = 0x80,
-    WIFI_POWER_OFF=0X81,
-    WIFI_MODE_1=0X08,   //state ->normal works
-    WIFI_MODE_2=0X18,   //state->sleeping works
-    WIFI_KILL_ON=0x04,  //Anion(plasma)
-    WIFI_KILL_OFF=0x14,
-    WIFI_PTC_ON = 0x02, 
-    WIFI_PTC_OFF = 0x12,
-    WIFI_SONIC_ON = 0x01,       //ultrasonic
-    WIFI_SONIC_OFF = 0x11,
-    WIFI_TEMPERATURE = 0xA0,
-	
-    WIFI_POWER_ON_NORMAL= 0xB0,
-	WIFI_POWER_OFF_NORMAL = 0xB1,
-
-	PTC_WARNING= 0xE1,
-	FAN_WARNING = 0xE2,
-
-	FAN_REMOVE_WARNING = 0xF2
-    
-
-
-}wifi_state_t;
-#endif 
-
 
 typedef enum TIMING_T{
 

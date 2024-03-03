@@ -6,9 +6,9 @@
   ******************************************************************************
   * @attention
   *
-  * Data:2024.03.03. tuya of wifi that model S03
-  * S03 TFT display version 0.1
-  * 
+  * Copyright (c) 2022 STMicroelectronics.
+  * mass version 4.2
+  * note: 1 .touch key adjut timer timing of digital of number cycle problem.
   * 
   * 
   * 
@@ -129,55 +129,52 @@ int main(void)
       case 1:
           
 	 
-          if(run_t.decodeFlag ==1){
-			run_t.decodeFlag =0;
-            Decode_Function();
+      if(run_t.decodeFlag ==1){
+		run_t.decodeFlag =0;
+        Decode_Function();
+            
+       }
+	    if(run_t.gPower_On==1 && run_t.process_run_guarantee_flag==0){
+            
+              
+        if(run_t.power_key_interrupt_counter !=1){
+              run_t.gKey_command_tag= KEY_Scan();
+             
+
+         }
+
+        if(run_t.power_key_interrupt_counter ==1){
+            run_t.gPower_On=RUN_POWER_ON;
+            SendData_PowerOnOff(1);
+            HAL_Delay(20);
+            
+
+          }
                 
-           }
-		    if(run_t.gPower_On==1 && run_t.process_run_guarantee_flag==0){
-                
-                  
-                    if(run_t.power_key_interrupt_counter !=1){
-                          run_t.gKey_command_tag= KEY_Scan();
-                         
-
-                     }
-
-                    if(run_t.power_key_interrupt_counter ==1){
-                        run_t.gPower_On=RUN_POWER_ON;
-                        SendData_PowerOnOff(1);
-                        HAL_Delay(20);
-                        
-
-                      }
+        }
+        else if(run_t.first_power_on_flag ==4 && first_on==0){
+             first_on++;
+             run_t.first_power_on_flag=5;
+              run_t.gKey_command_tag = POWER_ON_ITEM;
+              SendData_PowerOnOff(1);
+              HAL_Delay(20);
                     
-            }
-            else if(run_t.first_power_on_flag ==4 && first_on==0){
-                 first_on++;
-                 run_t.first_power_on_flag=5;
-                  run_t.gKey_command_tag = POWER_ON_ITEM;
-                  SendData_PowerOnOff(1);
-                  HAL_Delay(20);
-                        
 
-             }
-             else if(run_t.first_power_on_flag==1){
-				run_t.first_power_on_flag++;
-				
-				//run_t.gPower_On = RUN_POWER_OFF;
-				run_t.gKey_command_tag = POWER_OFF_ITEM;
-			}
-			Process_Key_Handler(run_t.gKey_command_tag);
-			RunPocess_Command_Handler();
-			USART1_Cmd_Error_Handler();
+         }
+         else if(run_t.first_power_on_flag==1){
+			run_t.first_power_on_flag++;
+			
+			//run_t.gPower_On = RUN_POWER_OFF;
+			run_t.gKey_command_tag = POWER_OFF_ITEM;
+		}
+		Process_Key_Handler(run_t.gKey_command_tag);
+		RunPocess_Command_Handler();
+		USART1_Cmd_Error_Handler();
 
            
-            
-			
-                
-          break;
+      break;
       
-         }
+     }
   }
   /* USER CODE END 3 */
 }
