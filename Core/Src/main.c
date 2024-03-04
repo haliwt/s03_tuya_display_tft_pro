@@ -154,10 +154,13 @@ int main(void)
         }
         else if(run_t.first_power_on_flag ==4 && first_on==0){
              first_on++;
+			 run_t.first_power_key_pressed_flag =1;
+			
              run_t.first_power_on_flag=5;
               run_t.gKey_command_tag = POWER_ON_ITEM;
               SendData_PowerOnOff(1);
-              HAL_Delay(20);
+			 HAL_Delay(20);
+              
                     
 
          }

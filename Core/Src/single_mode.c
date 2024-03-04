@@ -711,7 +711,7 @@ void RunPocess_Command_Handler(void)
        power_off=0;
      
        //run_t.first_power_on_flag=3;
-    if(run_t.gTimer_first_power_on_flag > 0 && run_t.wifi_receive_power_on_flag==0){
+    if(run_t.gTimer_first_power_on_flag > 0 && run_t.wifi_receive_power_on_flag==0 && run_t.first_power_key_pressed_flag !=1){
         run_t.gTimer_first_power_on_flag =0;
 	   	
           
@@ -841,7 +841,7 @@ void RunPocess_Command_Handler(void)
     		HAL_Delay(2);
 
          }
-
+         run_t.first_power_key_pressed_flag =0;
    	     Breath_Led();
          beijing_time_fun();
          if(run_t.gFan_RunContinue == 1){

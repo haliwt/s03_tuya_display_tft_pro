@@ -43,6 +43,7 @@ typedef struct __RUN{
    uint8_t power_times;
    uint8_t vk36n4d_interrupt_flag;
    uint8_t gKey_command_tag ;
+   uint8_t first_power_key_pressed_flag;
    
    uint8_t gTemperature;
  
