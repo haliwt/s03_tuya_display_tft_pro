@@ -63,6 +63,8 @@ typedef struct __RUN{
   uint8_t step_run_power_on_tag;
   uint8_t gTimer_detected_power_key;
   uint8_t power_key_detected;
+  
+  uint8_t gsend_sound_power_on;
 
  
   

@@ -145,8 +145,11 @@ int main(void)
 
         if(run_t.power_key_interrupt_counter ==1){
             run_t.gPower_On=RUN_POWER_ON;
+            if(run_t.gsend_sound_power_on ==0){
+                run_t.gsend_sound_power_on=1;
             SendData_PowerOnOff(1);
             HAL_Delay(20);
+            }
             
 
           }

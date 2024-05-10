@@ -79,7 +79,7 @@ void Process_Key_Handler(uint8_t keylabel)
                
                run_t.gFan_RunContinue = 0;
             }
-            else if(run_t.wifi_send_buzzer_sound != WIFI_POWER_OFF_ITEM){
+            else if(run_t.wifi_send_buzzer_sound != WIFI_POWER_OFF_ITEM ){
        
                 SendData_PowerOnOff(0);
         		HAL_Delay(1);
@@ -90,6 +90,7 @@ void Process_Key_Handler(uint8_t keylabel)
                 run_t.gTimer_first_power_on_counter=0;
 
              }
+            run_t.gsend_sound_power_on=2;
             run_t.power_key_interrupt_counter=0;//WT.EDIT 2023.07.25
 			run_t.gPower_On = RUN_POWER_OFF;
           
@@ -115,7 +116,7 @@ void Process_Key_Handler(uint8_t keylabel)
             run_t.gKey_command_tag = KEY_NULL;
             run_t.process_run_guarantee_flag=0;
             }
-
+            keylabel = 0xff;
 	  break;
 
 	  case POWER_ON_ITEM:
@@ -126,8 +127,8 @@ void Process_Key_Handler(uint8_t keylabel)
                    
                 }
 
-               if(run_t.wifi_send_buzzer_sound != WIFI_POWER_ON_ITEM){
-               SendData_PowerOnOff(1);
+               if(run_t.wifi_send_buzzer_sound != WIFI_POWER_ON_ITEM &&  run_t.gsend_sound_power_on !=1){
+                SendData_PowerOnOff(1);
     			HAL_Delay(2);
                }
     	  		Power_On_Fun();
